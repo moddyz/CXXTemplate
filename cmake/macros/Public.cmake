@@ -6,6 +6,46 @@ include(
     Private
 )
 
+# List all the sub-directories, under PARENT_DIRECTORY, and store
+# into SUBDIRS.
+macro(
+    list_subdirectories
+    SUBDIRS
+    PARENT_DIRECTORY
+)
+    # Glob all files under current directory.
+    file(
+        GLOB
+        CHILDREN
+        RELATIVE ${PARENT_DIRECTORY}
+        ${PARENT_DIRECTORY}/*
+    )
+
+    set(DIRECTORY_LIST
+        ""
+    )
+
+    foreach(
+        CHILD
+        ${CHILDREN}
+    )
+        if(IS_DIRECTORY
+           ${PARENT_DIRECTORY}/${CHILD}
+        )
+            list(
+                APPEND
+                DIRECTORY_LIST
+                ${CHILD}
+            )
+        endif()
+    endforeach()
+
+    set(${SUBDIRS}
+        ${DIRECTORY_LIST}
+    )
+endmacro()
+
+
 # Builds a new shared library.
 function(
     CMakeTemplate_library
