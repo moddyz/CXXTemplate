@@ -2,8 +2,11 @@ CMakeTemplate_library(
     examplePrefix
     exampleLibrary
     CPPFILES
-        adder.cpp
+        add.cpp
     PUBLIC_HEADERS
-        adder.h
+        add.h
 )
 
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

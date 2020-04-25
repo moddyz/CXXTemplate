@@ -1,4 +1,4 @@
-#include <examplePrefix/exampleLibrary/adder.h>
+#include <examplePrefix/exampleLibrary/add.h>
 
 #include <cstdio>
 

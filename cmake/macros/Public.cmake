@@ -29,6 +29,8 @@ function(
         ${ARGN}
     )
 
+    # Each library has a prefix which serves as the top-level organizing
+    # structure.  This could be the project, or organization name.
     set(PREFIXED_LIBRARY
         ${PACKAGE_PREFIX}_${LIBRARY_NAME}
     )
@@ -41,24 +43,27 @@ function(
         ${args_PUBLIC_HEADERS}
     )
 
-    # Library.
+    # Add a new shared library target.
     add_library(
         ${PREFIXED_LIBRARY}
         SHARED
         ${args_CPPFILES}
     )
 
+    # Apply common compiler flags, and include path flags.
     _set_compiler_flags(
         ${PREFIXED_LIBRARY}
         INCLUDE_PATHS
         ${args_INCLUDE_PATHS}
     )
 
+    # Link to libraries.
     target_link_libraries(
         ${PREFIXED_LIBRARY}
         PRIVATE ${args_LIBRARIES}
     )
 
+    # Install the built library.
     install(
         TARGETS ${PREFIXED_LIBRARY}
         LIBRARY DESTINATION lib
@@ -102,13 +107,53 @@ function(
 
     target_link_libraries(
         ${PROGRAM_NAME}
-        PRIVATE ${args_LIBRARIES}
+        PRIVATE
+            ${args_LIBRARIES}
     )
 
-    # Install
+    # Install built executable.
     install(
         TARGETS ${PROGRAM_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
     )
 
 endfunction() # CMakeTemplate_program
+
+# A specialised executable program, for tests.
+function(
+    CMakeTemplate_test_program
+    PROGRAM_NAME
+)
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs
+        CPPFILES
+        INCLUDE_PATHS
+        LIBRARIES
+    )
+
+    cmake_parse_arguments(
+        args
+        "${options}"
+        "${oneValueArgs}"
+        "${multiValueArgs}"
+        ${ARGN}
+    )
+
+    cmaketemplate_program(
+        ${PROGRAM_NAME}
+        CPPFILES
+            ${args_CPPFILES}
+        INCLUDE_PATHS
+            ${args_INCLUDE_PATHS}
+        LIBRARIES
+            ${args_LIBRARIES}
+            catch2
+    )
+
+    add_test(
+        NAME ${PROGRAM_NAME}
+        COMMAND $<TARGET_FILE:${PROGRAM_NAME}>
+    )
+
+endfunction() # pbr_test_program
