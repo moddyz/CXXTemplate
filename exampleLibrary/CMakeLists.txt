@@ -1,4 +1,4 @@
-CMakeTemplate_library(
+cpp_library(
     examplePrefix
     exampleLibrary
     CPPFILES

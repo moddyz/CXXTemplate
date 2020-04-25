@@ -48,7 +48,7 @@ endmacro()
 
 # Builds a new shared library.
 function(
-    CMakeTemplate_library
+    cpp_library
     PACKAGE_PREFIX
     LIBRARY_NAME
 )
@@ -110,11 +110,11 @@ function(
         ARCHIVE DESTINATION lib
     )
 
-endfunction() # CMakeTemplate_library
+endfunction() # cpp_library
 
 # Builds a new executable program.
 function(
-    CMakeTemplate_program
+    cpp_program
     PROGRAM_NAME
 )
     set(options)
@@ -157,11 +157,11 @@ function(
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
     )
 
-endfunction() # CMakeTemplate_program
+endfunction() # cpp_program
 
 # A specialised executable program, for tests.
 function(
-    CMakeTemplate_test_program
+    cpp_test_program
     PROGRAM_NAME
 )
     set(options)
@@ -182,7 +182,7 @@ function(
 
     # A test program target is the same as a program target, except it as an
     # extra library dependency onto catch2.
-    CMakeTemplate_program(
+    cpp_program(
         ${PROGRAM_NAME}
         CPPFILES
             ${args_CPPFILES}
@@ -198,4 +198,4 @@ function(
         COMMAND $<TARGET_FILE:${PROGRAM_NAME}>
     )
 
-endfunction() # CMakeTemplate_test_program
+endfunction() # cpp_test_program

@@ -1,4 +1,4 @@
-CMakeTemplate_program(
+cpp_program(
     exampleProgram
     LIBRARIES
         examplePrefix_exampleLibrary
