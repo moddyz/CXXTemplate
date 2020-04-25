@@ -26,6 +26,7 @@ string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
 # Testing.
 if(BUILD_TESTING)
     enable_testing()
+    list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
 endif()
 
 # Build targets.
