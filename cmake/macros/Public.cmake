@@ -140,7 +140,9 @@ function(
         ${ARGN}
     )
 
-    cmaketemplate_program(
+    # A test program target is the same as a program target, except it as an
+    # extra library dependency onto catch2.
+    CMakeTemplate_program(
         ${PROGRAM_NAME}
         CPPFILES
             ${args_CPPFILES}
@@ -156,4 +158,4 @@ function(
         COMMAND $<TARGET_FILE:${PROGRAM_NAME}>
     )
 
-endfunction() # pbr_test_program
+endfunction() # CMakeTemplate_test_program
