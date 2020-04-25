@@ -6,7 +6,6 @@ mkdir -p build && cd build
 
 CMAKE_ARGS=\
 \ -DCMAKE_BUILD_TYPE="Debug"\
-\ -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON\
 \ -DBUILD_TESTING="TRUE"
 
 # Only build if installation path not specified.
