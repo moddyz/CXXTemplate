@@ -16,5 +16,5 @@ find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YourProjectN
 Convenience macros are available to build and deploy a library or a program.
 
 Examples:
-- [exampleLibrary](exampleProgram/CMakeLists.txt)
-- [exampleProgram](exampleProgram/CMakeLists.txt)
+- [exampleLibrary/CMakeLists.txt](exampleProgram/CMakeLists.txt)
+- [exampleProgram/CMakeLists.txt](exampleProgram/CMakeLists.txt)
