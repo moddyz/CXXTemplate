@@ -16,7 +16,7 @@ A convenience build script is also provided, for building all targets, and optio
 ./build.sh <OPTIONAL_INSTALL_LOCATION>
 ```
 
-## Convience funcitons & macros
+## Convience functions & macros
 
 Convenience functions and macros are available to build and deploy a library or a program:
 - [cpp_static_library](exampleStaticLibrary/CMakeLists.txt)
