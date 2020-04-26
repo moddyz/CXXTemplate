@@ -1,7 +1,7 @@
 cpp_program(
     exampleProgram
     LIBRARIES
-        examplePrefix_exampleLibrary
+        exampleSharedLibrary
     CPPFILES
         main.cpp
 )

@@ -32,4 +32,5 @@ endif()
 # Build targets.
 add_subdirectory(thirdparty)
 add_subdirectory(exampleProgram)
-add_subdirectory(exampleLibrary)
+add_subdirectory(exampleSharedLibrary)
+#add_subdirectory(exampleStaticLibrary)

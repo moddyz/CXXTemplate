@@ -45,7 +45,6 @@ endfunction() # _set_compiler_include_flags
 # Utility function for deploying public headers.
 function(
     _install_public_headers
-    PACKAGE_PREFIX
     LIBRARY_NAME
 )
     set(options)
@@ -64,11 +63,51 @@ function(
 
     file(
         COPY ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_BINARY_DIR}/include/${PACKAGE_PREFIX}/${LIBRARY_NAME}
+        DESTINATION ${CMAKE_BINARY_DIR}/include/${LIBRARY_NAME}
     )
     install(
         FILES ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${PACKAGE_PREFIX}/${LIBRARY_NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${LIBRARY_NAME}
     )
 
-endfunction()
+endfunction() # _install_public_headers
+
+function(
+    _finalize_cpp_library
+    LIBRARY_NAME
+)
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs
+        INCLUDE_PATHS
+        LIBRARIES
+    )
+
+    cmake_parse_arguments(
+        args
+        "${options}"
+        "${oneValueArgs}"
+        "${multiValueArgs}"
+        ${ARGN}
+    )
+
+    # Apply common compiler flags, and include path flags.
+    _set_compiler_flags(
+        ${LIBRARY_NAME}
+        INCLUDE_PATHS
+        ${args_INCLUDE_PATHS}
+    )
+
+    # Link to libraries.
+    target_link_libraries(
+        ${LIBRARY_NAME}
+        PRIVATE ${args_LIBRARIES}
+    )
+
+    # Install the built library.
+    install(
+        TARGETS ${LIBRARY_NAME}
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+    )
+endfunction() # _cpp_library_postlude
