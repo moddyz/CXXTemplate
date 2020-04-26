@@ -25,3 +25,7 @@ Convenience functions and macros are available to build and deploy a library or 
 - [cpp_test_program](exampleSharedLibrary/tests/CMakeLists.txt)
 
 See [cmake/macros/Public.cmake](cmake/macros/Public.cmake) for the full listing.
+
+## Future planned work
+
+- Exporting of targets
