@@ -82,6 +82,10 @@ function(
 
     _finalize_cpp_library(
         ${LIBRARY_NAME}
+        INCLUDE_PATHS
+            ${args_INCLUDE_PATHS}
+        LIBRARIES
+            ${args_LIBRARIES}
     )
 
 endfunction() # cpp_shared_library
@@ -124,6 +128,10 @@ function(
 
     _finalize_cpp_library(
         ${LIBRARY_NAME}
+        INCLUDE_PATHS
+            ${args_INCLUDE_PATHS}
+        LIBRARIES
+            ${args_LIBRARIES}
     )
 
 endfunction() # cpp_static_library
