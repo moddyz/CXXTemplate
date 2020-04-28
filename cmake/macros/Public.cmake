@@ -169,6 +169,10 @@ function(
         ${args_INCLUDE_PATHS}
     )
 
+    _set_link_flags(
+        ${PROGRAM_NAME}
+    )
+
     target_link_libraries(
         ${PROGRAM_NAME}
         PRIVATE ${args_LIBRARIES}

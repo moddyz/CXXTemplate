@@ -5,7 +5,8 @@ project(
   CMakeTemplate
   VERSION 0.0
   DESCRIPTION "Basic template for starting out a new CMake-based project."
-  LANGUAGES CXX)
+  LANGUAGES CXX
+)
 
 # Cross-platform compatibility.
 if(UNIX AND NOT APPLE)
