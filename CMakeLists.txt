@@ -13,16 +13,9 @@ if(UNIX AND NOT APPLE)
   set(LINUX TRUE)
 endif()
 
-# Discover modules.
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake/modules")
-# find_package(DEPENDENCY_NAME REQUIRED)
-
 # Discover macros.
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake/macros")
 include(Public)
-
-# Compiler options.
-string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
 
 # Testing.
 if(BUILD_TESTING)
