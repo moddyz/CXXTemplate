@@ -70,7 +70,7 @@ function(
     _install_public_headers(
         ${LIBRARY_NAME}
         PUBLIC_HEADERS
-        ${args_PUBLIC_HEADERS}
+            ${args_PUBLIC_HEADERS}
     )
 
     # Add a new shared library target.
@@ -78,6 +78,7 @@ function(
         ${LIBRARY_NAME}
         SHARED
         ${args_CPPFILES}
+        ${args_PUBLIC_HEADERS}
     )
 
     _finalize_cpp_library(
@@ -124,6 +125,7 @@ function(
         ${LIBRARY_NAME}
         STATIC
         ${args_CPPFILES}
+        ${args_PUBLIC_HEADERS}
     )
 
     _finalize_cpp_library(

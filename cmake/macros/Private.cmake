@@ -36,8 +36,9 @@ function(
 
     target_include_directories(
         ${TARGET_NAME}
-        PRIVATE $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
-                ${args_INCLUDE_PATHS}
+        PRIVATE
+            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+            ${args_INCLUDE_PATHS}
     )
 
 endfunction() # _set_compiler_flags
