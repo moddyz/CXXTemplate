@@ -1,5 +1,5 @@
 #
-# Convenience macros for building libraries and executable programs.
+# Public-facing convenience functions & macros for building.
 #
 
 include(
@@ -143,7 +143,7 @@ macro(
     set(${SUBDIRS} ${DIRECTORY_LIST})
 endmacro()
 
-# Builds a new library.
+# Builds a new C++ library.
 #
 # Single value Arguments:
 #   TYPE
@@ -205,9 +205,17 @@ function(
             ${args_LIBRARIES}
     )
 
-endfunction() # cpp_shared_library
+endfunction() # cpp_library
 
-# Builds a new executable program.
+# Builds a new C++ executable program.
+#
+# Multi-value Arguments:
+#   CPPFILES
+#       C++ source files.
+#   INCLUDE_PATHS
+#       Include paths for compiling the source files.
+#   LIBRARIES
+#       Library dependencies used for linking, but also inheriting INTERFACE properties.
 function(
     cpp_program
     PROGRAM_NAME
@@ -234,19 +242,20 @@ function(
         ${args_CPPFILES}
     )
 
-    _set_compiler_flags(
+    _set_compile_properties(
         ${PROGRAM_NAME}
         INCLUDE_PATHS
         ${args_INCLUDE_PATHS}
     )
 
-    _set_link_flags(
+    _set_link_properties(
         ${PROGRAM_NAME}
     )
 
     target_link_libraries(
         ${PROGRAM_NAME}
-        PRIVATE ${args_LIBRARIES}
+        PRIVATE
+            ${args_LIBRARIES}
     )
 
     # Install built executable.
@@ -257,10 +266,19 @@ function(
 
 endfunction() # cpp_program
 
-# A specialised executable program, for tests.
+# Build C++ test executable program.
+# The assumed test framework is Catch2, and will be provided as a library dependency.
+#
+# Multi-value Arguments:
+#   CPPFILES
+#       C++ source files.
+#   INCLUDE_PATHS
+#       Include paths for compiling the source files.
+#   LIBRARIES
+#       Library dependencies used for linking, but also inheriting INTERFACE properties.
 function(
     cpp_test_program
-    PROGRAM_NAME
+    TEST_NAME
 )
     set(options)
     set(oneValueArgs)
@@ -281,7 +299,7 @@ function(
     # A test program target is the same as a program target, except it as an
     # extra library dependency onto catch2.
     cpp_program(
-        ${PROGRAM_NAME}
+        ${TEST_NAME}
         CPPFILES
         ${args_CPPFILES}
         INCLUDE_PATHS
@@ -291,9 +309,25 @@ function(
         catch2
     )
 
+    # Add TEST_NAME to be executed when running the "test" target.
     add_test(
-        NAME ${PROGRAM_NAME}
-        COMMAND $<TARGET_FILE:${PROGRAM_NAME}>
+        NAME ${TEST_NAME}
+        COMMAND $<TARGET_FILE:${TEST_NAME}>
     )
 
 endfunction() # cpp_test_program
+
+# Export the targets of this project.
+function(
+    install_exported_targets
+)
+    install(
+        EXPORT ${CMAKE_PROJECT_NAME}-exports
+        FILE
+            ${CMAKE_PROJECT_NAME}Targets.cmake
+        NAMESPACE
+            ${CMAKE_PROJECT_NAME}::
+        DESTINATION
+            ${CMAKE_INSTALL_PREFIX}
+    )
+endfunction()

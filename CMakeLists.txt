@@ -28,3 +28,6 @@ add_subdirectory(thirdparty)
 add_subdirectory(exampleProgram)
 add_subdirectory(exampleSharedLibrary)
 add_subdirectory(exampleStaticLibrary)
+
+# Install exported targets.
+install_exported_targets()
