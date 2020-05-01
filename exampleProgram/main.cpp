@@ -1,4 +1,4 @@
-#include <examplePrefix/exampleLibrary/add.h>
+#include <exampleSharedLibrary/add.h>
 
 #include <cstdio>
 

@@ -132,37 +132,41 @@ macro(
         ${PARENT_DIRECTORY}/*
     )
 
-    set(DIRECTORY_LIST
-        ""
-    )
+    set(DIRECTORY_LIST "")
 
-    foreach(
-        CHILD
-        ${CHILDREN}
-    )
-        if(IS_DIRECTORY
-           ${PARENT_DIRECTORY}/${CHILD}
-        )
-            list(
-                APPEND
-                DIRECTORY_LIST
-                ${CHILD}
-            )
+    foreach(CHILD ${CHILDREN})
+        if(IS_DIRECTORY ${PARENT_DIRECTORY}/${CHILD})
+            list( APPEND DIRECTORY_LIST ${CHILD})
         endif()
     endforeach()
 
-    set(${SUBDIRS}
-        ${DIRECTORY_LIST}
-    )
+    set(${SUBDIRS} ${DIRECTORY_LIST})
 endmacro()
 
-# Builds a new shared library.
+# Builds a new library.
+#
+# Single value Arguments:
+#   TYPE
+#       The type of library, STATIC or SHARED.
+#
+# Multi-value Arguments:
+#   CPPFILES
+#       C++ source files.
+#   PUBLIC_HEADERS
+#       Header files, which will be deployed for external usage.
+#   INCLUDE_PATHS
+#       Include paths for compiling the source files.
+#   LIBRARIES
+#       Library dependencies used for linking, but also inheriting INTERFACE properties.
+#
 function(
-    cpp_shared_library
+    cpp_library
     LIBRARY_NAME
 )
     set(options)
-    set(oneValueArgs)
+    set(oneValueArgs
+        TYPE
+    )
     set(multiValueArgs
         CPPFILES
         PUBLIC_HEADERS
@@ -188,7 +192,7 @@ function(
     # Add a new shared library target.
     add_library(
         ${LIBRARY_NAME}
-        SHARED
+        ${args_TYPE}
         ${args_CPPFILES}
         ${args_PUBLIC_HEADERS}
     )
@@ -202,53 +206,6 @@ function(
     )
 
 endfunction() # cpp_shared_library
-
-# Builds a new static library.
-function(
-    cpp_static_library
-    LIBRARY_NAME
-)
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs
-        CPPFILES
-        PUBLIC_HEADERS
-        INCLUDE_PATHS
-        LIBRARIES
-    )
-
-    cmake_parse_arguments(
-        args
-        "${options}"
-        "${oneValueArgs}"
-        "${multiValueArgs}"
-        ${ARGN}
-    )
-
-    # Install public headers for build and distribution.
-    _install_public_headers(
-        ${LIBRARY_NAME}
-        PUBLIC_HEADERS
-        ${args_PUBLIC_HEADERS}
-    )
-
-    # Add a new shared library target.
-    add_library(
-        ${LIBRARY_NAME}
-        STATIC
-        ${args_CPPFILES}
-        ${args_PUBLIC_HEADERS}
-    )
-
-    _finalize_cpp_library(
-        ${LIBRARY_NAME}
-        INCLUDE_PATHS
-            ${args_INCLUDE_PATHS}
-        LIBRARIES
-            ${args_LIBRARIES}
-    )
-
-endfunction() # cpp_static_library
 
 # Builds a new executable program.
 function(

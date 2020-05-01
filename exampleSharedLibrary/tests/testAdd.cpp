@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
-#include <examplePrefix/exampleLibrary/add.h>
+#include <exampleSharedLibrary/add.h>
 
 TEST_CASE( "Add" )
 {

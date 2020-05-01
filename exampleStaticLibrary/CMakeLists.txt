@@ -1,6 +1,7 @@
 set(LIBRARY_NAME exampleStaticLibrary)
 
-cpp_static_library(${LIBRARY_NAME}
+cpp_library(${LIBRARY_NAME}
+    TYPE STATIC
     CPPFILES
         add.cpp
     PUBLIC_HEADERS
