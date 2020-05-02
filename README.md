@@ -25,7 +25,3 @@ Convenience functions and macros are available to build libraries, documentation
 - [export_project](CMakeLists.txt)
 
 See [cmake/macros/Public.cmake](cmake/macros/Public.cmake) for the full listing.
-
-## Future planned work
-
-- Exporting of targets
