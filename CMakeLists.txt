@@ -30,4 +30,4 @@ add_subdirectory(exampleSharedLibrary)
 add_subdirectory(exampleStaticLibrary)
 
 # Install exported targets.
-install_exported_targets()
+export_project(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in)

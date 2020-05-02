@@ -317,17 +317,30 @@ function(
 
 endfunction() # cpp_test_program
 
-# Export the targets of this project.
+# Export this project for external usage.
+# Targets will be exported, and the supplied Config cmake file will configured & deployed.
+#
+# Arguments:
+#   INPUT_CONFIG
+#       Path to a Config.cmake.in which will be configured with CMake variables.
 function(
-    install_exported_targets
+    export_project
+    INPUT_CONFIG
 )
+    # Install exported targets (libraries).
     install(
-        EXPORT ${CMAKE_PROJECT_NAME}-exports
+        EXPORT ${CMAKE_PROJECT_NAME}-targets
         FILE
             ${CMAKE_PROJECT_NAME}Targets.cmake
-        NAMESPACE
-            ${CMAKE_PROJECT_NAME}::
         DESTINATION
-            ${CMAKE_INSTALL_PREFIX}
+            ${CMAKE_INSTALL_PREFIX}/cmake
+    )
+
+    # Configure & install <Project>Config.cmake
+    set(OUTPUT_CONFIG ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake)
+    configure_file(${INPUT_CONFIG} ${OUTPUT_CONFIG} @ONLY)
+    install(
+        FILES ${OUTPUT_CONFIG}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}
     )
 endfunction()

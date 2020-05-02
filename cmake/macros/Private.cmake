@@ -125,7 +125,7 @@ function(
     # Install the built library.
     install(
         TARGETS ${LIBRARY_NAME}
-        EXPORT ${CMAKE_PROJECT_NAME}-exports
+        EXPORT ${CMAKE_PROJECT_NAME}-targets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
     )
