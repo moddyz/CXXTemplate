@@ -25,9 +25,7 @@ endif()
 
 # Build targets.
 add_subdirectory(thirdparty)
-add_subdirectory(exampleProgram)
-add_subdirectory(exampleSharedLibrary)
-add_subdirectory(exampleStaticLibrary)
+add_subdirectory(examples)
 
 # Install exported targets.
 export_project(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in)

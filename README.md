@@ -19,9 +19,9 @@ A convenience build script is also provided, for building all targets, and optio
 ## Convience functions & macros
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
-- [cpp_library](exampleSharedLibrary/CMakeLists.txt)
-- [cpp_program](exampleProgram/CMakeLists.txt)
-- [cpp_test_program](exampleSharedLibrary/tests/CMakeLists.txt)
+- [cpp_library](examples/exampleSharedLibrary/CMakeLists.txt)
+- [cpp_program](examples/exampleProgram/CMakeLists.txt)
+- [cpp_test_program](examples/exampleSharedLibrary/tests/CMakeLists.txt)
 - [export_project](CMakeLists.txt)
 
 See [cmake/macros/Public.cmake](cmake/macros/Public.cmake) for the full listing.
