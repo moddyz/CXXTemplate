@@ -192,6 +192,13 @@ function(
             ${args_PUBLIC_HEADERS}
     )
 
+    # Default to STATIC library if TYPE is not specified.
+    if (NOT args_TYPE)
+        set(LIBRARY_TYPE "STATIC")
+    else()
+        set(LIBRARY_TYPE ${args_TYPE})
+    endif()
+
     # Add a new shared library target.
     add_library(
         ${LIBRARY_NAME}
