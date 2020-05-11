@@ -158,6 +158,8 @@ endmacro()
 #       Include paths for compiling the source files.
 #   LIBRARIES
 #       Library dependencies used for linking, but also inheriting INTERFACE properties.
+#   DEFINES
+#       Custom preprocessor defines to set.
 #
 function(
     cpp_library
@@ -172,6 +174,7 @@ function(
         PUBLIC_HEADERS
         INCLUDE_PATHS
         LIBRARIES
+        DEFINES
     )
 
     cmake_parse_arguments(
@@ -197,12 +200,29 @@ function(
         ${args_PUBLIC_HEADERS}
     )
 
-    _finalize_cpp_library(
-        ${LIBRARY_NAME}
+    # Apply common compiler properties, and include path properties.
+    _set_compile_properties(${LIBRARY_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
-        LIBRARIES
+        DEFINES
+            ${args_DEFINES}
+    )
+
+    _set_link_properties(${LIBRARY_NAME})
+
+    # Link to libraries.
+    target_link_libraries(
+        ${LIBRARY_NAME}
+        PRIVATE
             ${args_LIBRARIES}
+    )
+
+    # Install the built library.
+    install(
+        TARGETS ${LIBRARY_NAME}
+        EXPORT ${CMAKE_PROJECT_NAME}-targets
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
     )
 
 endfunction() # cpp_library
@@ -216,6 +236,8 @@ endfunction() # cpp_library
 #       Include paths for compiling the source files.
 #   LIBRARIES
 #       Library dependencies used for linking, but also inheriting INTERFACE properties.
+#   DEFINES
+#       Custom preprocessor defines to set.
 function(
     cpp_program
     PROGRAM_NAME
@@ -226,6 +248,7 @@ function(
         CPPFILES
         INCLUDE_PATHS
         LIBRARIES
+        DEFINES
     )
 
     cmake_parse_arguments(
@@ -237,23 +260,20 @@ function(
     )
 
     # Add a new executable target.
-    add_executable(
-        ${PROGRAM_NAME}
+    add_executable(${PROGRAM_NAME}
         ${args_CPPFILES}
     )
 
-    _set_compile_properties(
-        ${PROGRAM_NAME}
+    _set_compile_properties(${PROGRAM_NAME}
         INCLUDE_PATHS
-        ${args_INCLUDE_PATHS}
+            ${args_INCLUDE_PATHS}
+        DEFINES
+            ${args_DEFINES}
     )
 
-    _set_link_properties(
-        ${PROGRAM_NAME}
-    )
+    _set_link_properties(${PROGRAM_NAME})
 
-    target_link_libraries(
-        ${PROGRAM_NAME}
+    target_link_libraries(${PROGRAM_NAME}
         PRIVATE
             ${args_LIBRARIES}
     )
@@ -276,6 +296,8 @@ endfunction() # cpp_program
 #       Include paths for compiling the source files.
 #   LIBRARIES
 #       Library dependencies used for linking, but also inheriting INTERFACE properties.
+#   DEFINES
+#       Custom preprocessor defines to set.
 function(
     cpp_test_program
     TEST_NAME
@@ -286,6 +308,7 @@ function(
         CPPFILES
         INCLUDE_PATHS
         LIBRARIES
+        DEFINES
     )
 
     cmake_parse_arguments(
@@ -298,15 +321,16 @@ function(
 
     # A test program target is the same as a program target, except it as an
     # extra library dependency onto catch2.
-    cpp_program(
-        ${TEST_NAME}
+    cpp_program(${TEST_NAME}
         CPPFILES
-        ${args_CPPFILES}
+            ${args_CPPFILES}
         INCLUDE_PATHS
-        ${args_INCLUDE_PATHS}
+            ${args_INCLUDE_PATHS}
         LIBRARIES
-        ${args_LIBRARIES}
-        catch2
+            ${args_LIBRARIES}
+            catch2
+        DEFINES
+            ${args_DEFINES}
     )
 
     # Add TEST_NAME to be executed when running the "test" target.

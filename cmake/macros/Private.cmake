@@ -11,6 +11,7 @@ function(
     set(oneValueArgs)
     set(multiValueArgs
         INCLUDE_PATHS
+        DEFINES
     )
 
     cmake_parse_arguments(
@@ -26,6 +27,11 @@ function(
                 -O3     # Highest degree of code optimisation.
                 -Wall   # Enable _all_ warnings.
                 -Werror # Error on compilation for warnings.
+    )
+
+    target_compile_definitions(${TARGET_NAME}
+        PRIVATE
+            ${args_DEFINES}
     )
 
     target_compile_features(${TARGET_NAME}
@@ -84,49 +90,3 @@ function(
     )
 
 endfunction() # _install_public_headers
-
-function(
-    _finalize_cpp_library
-    LIBRARY_NAME
-)
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs
-        INCLUDE_PATHS
-        LIBRARIES
-    )
-
-    cmake_parse_arguments(
-        args
-        "${options}"
-        "${oneValueArgs}"
-        "${multiValueArgs}"
-        ${ARGN}
-    )
-
-    # Apply common compiler properties, and include path properties.
-    _set_compile_properties(
-        ${LIBRARY_NAME}
-        INCLUDE_PATHS
-        ${args_INCLUDE_PATHS}
-    )
-
-    _set_link_properties(
-        ${LIBRARY_NAME}
-    )
-
-    # Link to libraries.
-    target_link_libraries(
-        ${LIBRARY_NAME}
-        PRIVATE
-            ${args_LIBRARIES}
-    )
-
-    # Install the built library.
-    install(
-        TARGETS ${LIBRARY_NAME}
-        EXPORT ${CMAKE_PROJECT_NAME}-targets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-    )
-endfunction() # _cpp_library_postlude
