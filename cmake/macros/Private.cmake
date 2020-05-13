@@ -88,5 +88,48 @@ function(
         FILES ${args_PUBLIC_HEADERS}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${LIBRARY_NAME}
     )
-
 endfunction() # _install_public_headers
+
+# Internal function for a cpp program.
+# This is so cpp_program and cpp_test program can install
+# to different locations.
+function(
+    _cpp_program
+    PROGRAM_NAME
+)
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs
+        CPPFILES
+        INCLUDE_PATHS
+        LIBRARIES
+        DEFINES
+    )
+
+    cmake_parse_arguments(
+        args
+        "${options}"
+        "${oneValueArgs}"
+        "${multiValueArgs}"
+        ${ARGN}
+    )
+
+    # Add a new executable target.
+    add_executable(${PROGRAM_NAME}
+        ${args_CPPFILES}
+    )
+
+    _set_compile_properties(${PROGRAM_NAME}
+        INCLUDE_PATHS
+            ${args_INCLUDE_PATHS}
+        DEFINES
+            ${args_DEFINES}
+    )
+
+    _set_link_properties(${PROGRAM_NAME})
+
+    target_link_libraries(${PROGRAM_NAME}
+        PRIVATE
+            ${args_LIBRARIES}
+    )
+endfunction()

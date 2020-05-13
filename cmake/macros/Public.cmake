@@ -266,23 +266,15 @@ function(
         ${ARGN}
     )
 
-    # Add a new executable target.
-    add_executable(${PROGRAM_NAME}
-        ${args_CPPFILES}
-    )
-
-    _set_compile_properties(${PROGRAM_NAME}
+    _cpp_program(${PROGRAM_NAME}
+        CPPFILES
+            ${args_CPPFILES}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
+        LIBRARIES
+            ${args_LIBRARIES}
         DEFINES
             ${args_DEFINES}
-    )
-
-    _set_link_properties(${PROGRAM_NAME})
-
-    target_link_libraries(${PROGRAM_NAME}
-        PRIVATE
-            ${args_LIBRARIES}
     )
 
     # Install built executable.
@@ -326,18 +318,22 @@ function(
         ${ARGN}
     )
 
-    # A test program target is the same as a program target, except it as an
-    # extra library dependency onto catch2.
-    cpp_program(${TEST_NAME}
+    _cpp_program(${TEST_NAME}
         CPPFILES
             ${args_CPPFILES}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         LIBRARIES
-            ${args_LIBRARIES}
             catch2
+            ${args_LIBRARIES}
         DEFINES
             ${args_DEFINES}
+    )
+
+    # Install built executable.
+    install(
+        TARGETS ${TEST_NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/tests
     )
 
     # Add TEST_NAME to be executed when running the "test" target.
