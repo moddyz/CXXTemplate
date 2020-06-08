@@ -371,3 +371,23 @@ function(
         DESTINATION ${CMAKE_INSTALL_PREFIX}
     )
 endfunction()
+
+# Convenience macro for calling add_subdirectory on all the sub-directories
+# in the current source directory.
+macro(
+    add_subdirectories
+)
+    list_subdirectories(
+        SUBDIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+
+    foreach(
+        subdir
+        ${SUBDIRS}
+    )
+        add_subdirectory(
+            ${subdir}
+        )
+    endforeach()
+endmacro()
