@@ -4,7 +4,7 @@ Basic template which can be used as a starting point for a new CMake-based C++ p
 
 This project also serves as an aggregation of useful CMake functionality.
 
-## Usage
+## Building
 
 A find and replace of "CMakeTemplate" with your project name will update relevant tokens to be specific to a project, ie:
 ```
