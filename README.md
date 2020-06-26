@@ -6,15 +6,14 @@ This project also serves as an aggregation of useful CMake functionality.
 
 ## Building
 
-A find and replace of "CMakeTemplate" with your project name will update relevant tokens to be specific to a project, ie:
-```
-find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YourProjectName/g" {} +
-```
-
 A convenience build script is also provided, for building all targets, and optionally installing to a location:
 ```
 ./build.sh <OPTIONAL_INSTALL_LOCATION>
 ```
+
+## Documentation
+
+Documentation based on the latest state of master, [hosted by GitHub Pages](https://moddyz.github.io/CMakeTemplate/).
 
 ## Convience functions & macros
 

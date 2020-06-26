@@ -8,6 +8,9 @@ project(
     LANGUAGES CXX
 )
 
+# Options
+option(BUILD_DOCUMENTATION "Build doxygen documentation." ON)
+
 # Cross-platform compatibility.
 if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
@@ -21,6 +24,23 @@ include(Public)
 if(BUILD_TESTING)
     enable_testing()
     list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
+endif()
+
+if(BUILD_DOCUMENTATION)
+    file(
+        COPY ${CMAKE_SOURCE_DIR}/README.md
+        DESTINATION ${CMAKE_BINARY_DIR}
+    )
+
+    doxygen_documentation(
+        doxygen_docs
+        GENERATE_TAGFILE TRUE
+        DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile.in
+        INPUTS
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/
+            ${CMAKE_CURRENT_SOURCE_DIR}/exampleSharedLibrary/
+            ${CMAKE_CURRENT_SOURCE_DIR}/exampleStaticLibrary/
+    )
 endif()
 
 # Build targets.
