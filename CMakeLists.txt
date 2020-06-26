@@ -38,8 +38,7 @@ if(BUILD_DOCUMENTATION)
         DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile.in
         INPUTS
             ${CMAKE_CURRENT_SOURCE_DIR}/src/
-            ${CMAKE_CURRENT_SOURCE_DIR}/exampleSharedLibrary/
-            ${CMAKE_CURRENT_SOURCE_DIR}/exampleStaticLibrary/
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/exampleSharedLibrary/
     )
 endif()
 
