@@ -4,18 +4,20 @@ Basic template which can be used as a starting point for a new CMake-based C++ p
 
 This project also serves as an aggregation of useful CMake functionality.
 
-## Building
+## Table of Contents
 
-A convenience build script is also provided, for building all targets, and optionally installing to a location:
-```
-./build.sh <OPTIONAL_INSTALL_LOCATION>
-```
+- [Build Status](#build-status)
+- [Documentation](#documentation)
+- [Convenience functions & macros](#convenience-functions-and-macros)
+- [Building](#building)
 
-## Documentation
+## Build Status
 
-Documentation based on the latest state of master, [hosted by GitHub Pages](https://moddyz.github.io/CMakeTemplate/).
+|       | master | 
+| ----- | ------ | 
+| macOS-10.14 | [![Build Status](https://travis-ci.com/moddyz/CMakeTemplate.svg?branch=master)](https://travis-ci.com/moddyz/CMakeTemplate) |
 
-## Convience functions & macros
+## Convience functions and macros
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
 - [cpp_library](src/exampleSharedLibrary/CMakeLists.txt)
@@ -24,3 +26,15 @@ Convenience functions and macros are available to build libraries, documentation
 - [export_project](CMakeLists.txt)
 
 See [cmake/macros/Public.cmake](cmake/macros/Public.cmake) for the full listing.
+
+## Documentation
+
+Documentation based on the latest state of master, [hosted by GitHub Pages](https://moddyz.github.io/CMakeTemplate/).
+
+## Building
+
+A convenience build script is also provided, for building all targets, and optionally installing to a location:
+```
+./build.sh <OPTIONAL_INSTALL_LOCATION>
+```
+
