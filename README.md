@@ -6,16 +6,10 @@ This project also serves as an aggregation of useful CMake functionality.
 
 ## Table of Contents
 
-- [Build Status](#build-status)
-- [Documentation](#documentation)
 - [Convenience functions & macros](#convenience-functions-and-macros)
+- [Documentation](#documentation)
 - [Building](#building)
-
-## Build Status
-
-|       | master | 
-| ----- | ------ | 
-| macOS-10.14 | [![Build Status](https://travis-ci.com/moddyz/CMakeTemplate.svg?branch=master)](https://travis-ci.com/moddyz/CMakeTemplate) |
+- [Build Status](#build-status)
 
 ## Convience functions and macros
 
@@ -42,3 +36,10 @@ A convenience build script is also provided, for building all targets, and optio
 
 - `>= CMake-3.17`
 - `>= C++17`
+
+## Build Status
+
+|       | master | 
+| ----- | ------ | 
+| macOS-10.14 | [![Build Status](https://travis-ci.com/moddyz/CMakeTemplate.svg?branch=master)](https://travis-ci.com/moddyz/CMakeTemplate) |
+
