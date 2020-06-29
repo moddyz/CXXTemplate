@@ -38,3 +38,7 @@ A convenience build script is also provided, for building all targets, and optio
 ./build.sh <OPTIONAL_INSTALL_LOCATION>
 ```
 
+### Requirements
+
+- `>= CMake-3.17`
+- `>= C++17`
