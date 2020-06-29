@@ -11,7 +11,7 @@ This project also serves as an aggregation of useful CMake functionality.
 - [Building](#building)
 - [Build Status](#build-status)
 
-## Convience functions and macros
+## Convenience functions and macros
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
 - [cpp_library](src/exampleSharedLibrary/CMakeLists.txt)
