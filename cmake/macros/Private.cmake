@@ -53,11 +53,19 @@ function(
     _set_link_properties
     TARGET_NAME
 )
-    target_link_options(
-        ${TARGET_NAME}
-        PRIVATE
-            -Wl,--no-undefined # Link error if there are undefined symbol(s) in output object.
-    )
+    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        target_link_options(
+            ${TARGET_NAME}
+            PRIVATE
+                -Wl,-undefined,error # Link error if there are undefined symbol(s) in output object.
+        )
+    else()
+        target_link_options(
+            ${TARGET_NAME}
+            PRIVATE
+                -Wl,--no-undefined # Link error if there are undefined symbol(s) in output object.
+        )
+    endif()
 endfunction() # _set_link_properties
 
 # Utility function for deploying public headers.
