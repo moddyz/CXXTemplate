@@ -6,12 +6,24 @@ This project also serves as an aggregation of useful CMake functionality.
 
 ## Table of Contents
 
-- [Convenience functions & macros](#convenience-functions-and-macros)
+- [Usage](#usage)
+  - [Convenience functions & macros](#convenience-functions-and-macros)
 - [Documentation](#documentation)
 - [Building](#building)
+  - [Requirements](#requirements)
 - [Build Status](#build-status)
 
-## Convenience functions and macros
+## Usage
+
+To use this template: 
+1. Create a new repository using **CMakeTemplate** as the selected template project.
+2. Replace occurances of "CMakeTemplate" with the new project name.
+```bash
+find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YOUR_PROJECT_NAME/g" {} +
+```
+3. Prune any un-wanted, example source directories of files.
+
+### Convenience functions and macros
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
 - [cpp_library](src/exampleSharedLibrary/CMakeLists.txt)

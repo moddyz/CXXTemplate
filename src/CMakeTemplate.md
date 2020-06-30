@@ -4,11 +4,15 @@
 
 \b CMakeTemplate is a GitHub template project used to serve as a basic starting point for C++ based projects.
 
-\section Example Usage
+\section Usage
 
 To use this template: 
--# Create a new repository based with \b CMakeTemplate as the selected template project>
--# Replace occurances of "CMakeTemplate" with your project name.
+#- Create a new repository using **CMakeTemplate** as the selected template project.
+#- Replace occurances of "CMakeTemplate" with the new project name.
+\code
+find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YOUR_PROJECT_NAME/g" {} +
+\endcode
+#- Prune any un-wanted, example source directories of files.
 
 \section CMakeTemplate_Building Building
 
