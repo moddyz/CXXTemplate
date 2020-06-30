@@ -13,4 +13,4 @@ set -euxo pipefail
 rm -rf /tmp/CMakeTemplate
 git clone https://github.com/moddyz/CMakeTemplate /tmp/CMakeTemplate
 cp -r /tmp/CMakeTemplate/cmake/macros/* ./cmake/macros/
-cp -r /tmp/CMakeTemplate/upgradeToLatest.sh ./
+cp -r /tmp/CMakeTemplate/upgradeToLatestTemplate.sh ./
