@@ -21,7 +21,7 @@ To use this template:
 ```bash
 find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YOUR_PROJECT_NAME/g" {} +
 ```
-3. Prune any un-wanted, example source directories of files.
+3. Prune any un-wanted source directories or files (such as the example library and programs under `src/`).
 
 ### Convenience functions and macros
 
