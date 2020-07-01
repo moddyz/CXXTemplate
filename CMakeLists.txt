@@ -34,8 +34,10 @@ if(BUILD_DOCUMENTATION)
 
     doxygen_documentation(
         doxygen_docs
-        GENERATE_TAGFILE TRUE
-        DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile.in
+        GENERATE_TAGFILE
+            TRUE
+        DOXYFILE
+            ${CMAKE_SOURCE_DIR}/docs/Doxyfile.in
         INPUTS
             ${CMAKE_CURRENT_SOURCE_DIR}/src/
             ${CMAKE_CURRENT_SOURCE_DIR}/src/exampleSharedLibrary/
