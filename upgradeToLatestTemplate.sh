@@ -9,8 +9,9 @@
 
 set -euxo pipefail
 
-# Clone the CMakeTemplate project and copy all the files into the local repository.
+# Clone the CMakeTemplate project and copy a subset of files into the current repository.
 rm -rf /tmp/CMakeTemplate
 git clone https://github.com/moddyz/CMakeTemplate /tmp/CMakeTemplate
 cp -r /tmp/CMakeTemplate/cmake/macros/* ./cmake/macros/
+cp -r /tmp/CMakeTemplate/.clang-format ./
 cp -r /tmp/CMakeTemplate/upgradeToLatestTemplate.sh ./
