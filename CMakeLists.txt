@@ -17,7 +17,8 @@ if(UNIX AND NOT APPLE)
 endif()
 
 # Discover macros.
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_SOURCE_DIR}/cmake/macros")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+                      ${CMAKE_SOURCE_DIR}/cmake/macros)
 include(Public)
 
 # Testing.
