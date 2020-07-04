@@ -8,6 +8,9 @@ include(
 
 # Build doxygen documentation utility.
 #
+# Positional arguments:
+#   DOCUMENTATION_NAME: The name of the documentation (this will also be the target name).
+#
 # Options:
 #   GENERATE_TAGFILE
 #       Boolean option to specify if a tagfile should be generated.
@@ -401,6 +404,8 @@ endmacro()
 
 # Convenience macro for adding the current source directory as a header only library.
 #
+# Positional arguments:
+#   LIBRARY: The target name of this header only library.
 function(
     add_header_only_library
     LIBRARY
