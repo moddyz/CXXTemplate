@@ -19,7 +19,7 @@ To use this template:
 1. Create a new repository using **CMakeTemplate** as the selected template project.
 2. Replace occurances of "CMakeTemplate" with the new project name.
 ```bash
-find . -name ".git" -prune -o -type f -exec sed -i "s/CMakeTemplate/YOUR_PROJECT_NAME/g" {} +
+find . -name ".git" -prune -o -name "syncTemplate.sh" -prune -o -type f -exec sed -i "s/CMakeTemplate/YOUR_PROJECT_NAME/g" {} +
 ```
 3. Prune any un-wanted source directories or files (such as the example library and programs under `src/`).
 
