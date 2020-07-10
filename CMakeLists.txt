@@ -18,7 +18,7 @@ endif()
 
 # Discover macros.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-                      ${CMAKE_SOURCE_DIR}/cmake/macros)
+                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros)
 include(Public)
 
 # Testing.
@@ -29,7 +29,7 @@ endif()
 
 if(BUILD_DOCUMENTATION)
     file(
-        COPY ${CMAKE_SOURCE_DIR}/README.md
+        COPY ${CMAKE_CURRENT_SOURCE_DIR}/README.md
         DESTINATION ${CMAKE_BINARY_DIR}
     )
 
@@ -38,7 +38,7 @@ if(BUILD_DOCUMENTATION)
         GENERATE_TAGFILE
             TRUE
         DOXYFILE
-            ${CMAKE_SOURCE_DIR}/docs/Doxyfile.in
+            ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in
         INPUTS
             ${CMAKE_CURRENT_SOURCE_DIR}/src/
             ${CMAKE_CURRENT_SOURCE_DIR}/src/exampleSharedLibrary/
@@ -50,4 +50,4 @@ add_subdirectory(thirdparty)
 add_subdirectory(src)
 
 # Install exported targets.
-export_project(${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in)
+export_project(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in)
