@@ -158,6 +158,8 @@ endmacro()
 # Single value Arguments:
 #   TYPE
 #       The type of library, STATIC or SHARED.
+#   HEADERS_INSTALL_PREFIX
+#       Optional installation prefix of the header files.  By default, the library name is used.
 #
 # Multi-value Arguments:
 #   CPPFILES
@@ -178,6 +180,7 @@ function(
     set(options)
     set(oneValueArgs
         TYPE
+        HEADERS_INSTALL_PREFIX
     )
     set(multiValueArgs
         CPPFILES
@@ -196,11 +199,19 @@ function(
     )
 
     # Install public headers for build and distribution.
-    _install_public_headers(
-        ${LIBRARY_NAME}
-        PUBLIC_HEADERS
-            ${args_PUBLIC_HEADERS}
-    )
+    if (NOT args_HEADERS_INSTALL_PREFIX)
+        _install_public_headers(
+            ${LIBRARY_NAME}
+            PUBLIC_HEADERS
+                ${args_PUBLIC_HEADERS}
+        )
+    else()
+        _install_public_headers(
+            ${args_HEADERS_INSTALL_PREFIX}
+            PUBLIC_HEADERS
+                ${args_PUBLIC_HEADERS}
+        )
+    endif()
 
     # Default to STATIC library if TYPE is not specified.
     if (NOT args_TYPE)

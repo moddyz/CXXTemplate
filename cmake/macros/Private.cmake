@@ -71,7 +71,7 @@ endfunction() # _set_link_properties
 # Utility function for deploying public headers.
 function(
     _install_public_headers
-    LIBRARY_NAME
+    HEADER_INSTALL_PREFIX
 )
     set(options)
     set(oneValueArgs)
@@ -89,12 +89,12 @@ function(
 
     file(
         COPY ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_BINARY_DIR}/include/${LIBRARY_NAME}
+        DESTINATION ${CMAKE_BINARY_DIR}/include/${HEADER_INSTALL_PREFIX}
     )
 
     install(
         FILES ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${LIBRARY_NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${HEADER_INSTALL_PREFIX}
     )
 endfunction() # _install_public_headers
 
