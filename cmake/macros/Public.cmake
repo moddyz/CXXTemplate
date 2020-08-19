@@ -9,7 +9,8 @@ include(
 # Build doxygen documentation utility.
 #
 # Positional arguments:
-#   DOCUMENTATION_NAME: The name of the documentation (this will also be the target name).
+#   DOCUMENTATION_NAME
+#       The name of the documentation (this will also be the target name).
 #
 # Options:
 #   GENERATE_TAGFILE
@@ -30,19 +31,19 @@ include(
 # The source DOXYFILE will be configured with visible CMake variables.
 # doxygen_documentation will introduce the following variables within the scope of
 # the function, based on arguments:
-# - DOXYGEN_INPUTS
+#   DOXYGEN_INPUTS
 #       Set from INPUTS argument.
 #       Please assign @DOXYGEN_INPUTS@ to the INPUTS property in the DOXYFILE.
-# - DOXYGEN_TAGFILES
+#   DOXYGEN_TAGFILES
 #       Set from TAGFILES argument.
 #       Please assign @DOXYGEN_TAGFILES@ to the TAGFILES property in the DOXYFILE.
-# - DOXYGEN_TAGFILE
+#   DOXYGEN_TAGFILE
 #       Path to the generated tagfile - if GENERATE_TAGFILE is TRUE.
 #       Please assign @DOXYGEN_TAGFILE@ to the GENERATE_TAGFILE property in the DOXYFILE.
-# - DOT_EXECUTABLE
+#   DOT_EXECUTABLE
 #       Path to the dot executable, via find_program.
 #       Please assign @DOT_EXECUTABLE@ to DOT_PATH property in the DOXYFILE.
-# - DOXYGEN_OUTPUT_DIR
+#   DOXYGEN_OUTPUT_DIR
 #       Output directory for generated documentation.
 #       Please assign @DOXYGEN_OUTPUT_DIR@ to OUTPUT_DIRECTORY property in the DOXYFILE.
 function(
