@@ -27,6 +27,7 @@ function(
                 -O3     # Highest degree of code optimisation.
                 -Wall   # Enable _all_ warnings.
                 -Werror # Error on compilation for warnings.
+                -fno-omit-frame-pointer # Preserve frame pointer register.
     )
 
     target_compile_definitions(${TARGET_NAME}
