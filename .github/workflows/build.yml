@@ -1,0 +1,54 @@
+name: Build and test
+
+# Run on any git push event.
+on: 
+  - push
+
+jobs:
+
+  # A build job matrix based on pre-built USD binaries provided by NVIDIA.
+  nvidia-usd-binaries-build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-18.04
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install dependencies (Linux)
+        run: sudo apt-get install cmake
+        if: startsWith(matrix.os, 'ubuntu')
+      - uses: actions/checkout@v2
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake -DBUILD_TESTING=ON \
+                -DCMAKE_INSTALL_PREFIX="/tmp/project/" \
+                ..
+          cmake --build  . -- VERBOSE=1 -j8 all test install
+      - name: "Upload installation as artifact."
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: /tmp/project/
+
+  # Run automated code formatting checks.
+  code-formatting-check:
+    runs-on: ubuntu-18.04 
+    steps:
+      - name: Install dependencies (Linux)
+        run: |
+          sudo apt-get install clang-format-10
+      - uses: actions/checkout@v2
+      - name: Run clang-format on source code
+        run: |
+          find . -name ".git" -prune -o -name "*.cpp" -type f -exec clang-format -i --verbose {} + -o -name "*.h" -type f -exec clang-format -i --verbose {} +
+      - name: Check for code differences
+        run: |
+          set +e
+          git diff --color
+          git diff-index --quiet HEAD --; EXIT_CODE=$?
+          set -e
+          if [ $EXIT_CODE -ne 0 ]; then echo "C++ code formatting check failed.  Please run clang-format on *.h and *.cpp, then push your changes."; fi
+          exit $EXIT_CODE

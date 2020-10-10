@@ -8,44 +8,21 @@ project(
     LANGUAGES CXX
 )
 
-# Options
-option(BUILD_DOCUMENTATION "Build doxygen documentation." ON)
-
-# Cross-platform compatibility.
-if(UNIX AND NOT APPLE)
-    set(LINUX TRUE)
-endif()
-
-# Discover macros.
+# Set module search paths.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/
                       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros)
-include(Public)
+# Apply options.
+include(Options)
 
-# Testing.
-if(BUILD_TESTING)
-    enable_testing()
-    list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
-endif()
+# Tools
+include(DocTools)
+include(CXXTools)
 
-if(BUILD_DOCUMENTATION)
-    file(
-        COPY ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-        DESTINATION ${CMAKE_BINARY_DIR}
-    )
+# Apply project defaults.
+include(Defaults)
 
-    doxygen_documentation(
-        doxygen_docs
-        GENERATE_TAGFILE
-            TRUE
-        DOXYFILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in
-        INPUTS
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/exampleSharedLibrary/
-    )
-endif()
-
-# Build targets.
+# Add targets.
 add_subdirectory(thirdparty)
 add_subdirectory(src)
 
