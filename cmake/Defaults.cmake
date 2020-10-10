@@ -10,10 +10,11 @@ if(BUILD_DOCUMENTATION)
         GENERATE_TAGFILE
             TRUE
         DOXYFILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in
+            ${PROJECT_SOURCE_DIR}/src/Doxyfile.in
         INPUTS
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/exampleSharedLibrary/
+            ${PROJECT_SOURCE_DIR}/src/exampleSharedLibrary/
+        DEPENDENCIES
+            exampleSharedLibrary
     )
 endif()
 
