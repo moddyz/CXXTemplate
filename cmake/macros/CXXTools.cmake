@@ -319,16 +319,14 @@ function(
     TARGET_NAME
 )
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        target_link_options(
-            ${TARGET_NAME}
-            PRIVATE
-                -Wl,-undefined,error # Link error if there are undefined symbol(s) in output object.
+        set_target_properties(${TARGET_NAME}
+            PROPERTIES
+            LINK_FLAGS "-Wl,-undefined,error" # Link error if there are undefined symbol(s) in output library.
         )
     else()
-        target_link_options(
-            ${TARGET_NAME}
-            PRIVATE
-                -Wl,--no-undefined # Link error if there are undefined symbol(s) in output object.
+        set_target_properties(${TARGET_NAME}
+            PROPERTIES
+            LINK_FLAGS "-Wl,--no-undefined" # Link error if there are undefined symbol(s) in output library.
         )
     endif()
 endfunction() # _set_link_properties

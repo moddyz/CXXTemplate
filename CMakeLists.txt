@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.12)
 
 # Project Name
 project(
-    CMakeTemplate
+    CXXTemplate
     VERSION 0.0
     DESCRIPTION "Basic template for starting out a new CMake-based project."
     LANGUAGES CXX
