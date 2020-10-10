@@ -16,6 +16,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 include(Options)
 
 # Tools
+include(BaseTools)
 include(DocTools)
 include(CXXTools)
 
