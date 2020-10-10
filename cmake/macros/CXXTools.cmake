@@ -1,10 +1,6 @@
 #
-# Functions & macros for build
+# Functions & macros for building C++ libraries and programs.
 #
-
-include(
-    Private
-)
 
 # List all the sub-directories, under PARENT_DIRECTORY, and store into SUBDIRS.
 macro(
