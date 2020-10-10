@@ -2,7 +2,7 @@
 
 # CXXTemplate
 
-Basic template project which can be used as a starting point for a new CMake-based C++ project.
+A starting point for a new CMake-based C++ project.
 
 ## Table of Contents
 

@@ -16,12 +16,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 include(Options)
 
 # Tools
+include(DocTools)
 include(CXXTools)
 
 # Apply project defaults.
 include(Defaults)
 
-# Build targets.
+# Add targets.
 add_subdirectory(thirdparty)
 add_subdirectory(src)
 
