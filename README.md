@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/moddyz/CXXTemplate.svg?branch=master)](https://travis-ci.com/moddyz/CXXTemplate)
+![Build and test](https://github.com/moddyz/CXXTemplate/workflows/Build%20and%20test/badge.svg)
 
 # CXXTemplate
 
