@@ -1,5 +1,5 @@
 #
-# Functions & macros for building C++ libraries and programs.
+# Tools for building C++ libraries and programs.
 #
 
 # Build a shared library.
@@ -20,26 +20,33 @@ macro(cpp_static_library NAME)
     )
 endmacro(cpp_static_library)
 
+# Builds a new C++ executable program.
+function(cpp_program NAME)
+    _cpp_program(${NAME}
+        ${ARGN}
+    )
+
+    # Install built executable.
+    install(
+        TARGETS ${NAME}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    )
+endfunction() # cpp_program
+
+# Build C++ test executable program.
+# The assumed test framework is Catch2, and will be provided as a library dependency.
+function(cpp_test_program NAME)
+    _cpp_program(${NAME}
+        ${ARGN}
+    )
+    add_test(
+        NAME ${NAME}
+        COMMAND $<TARGET_FILE:${NAME}>
+    )
+
+endfunction() # cpp_test_program
+
 # Builds a new C++ library.
-#
-# Single value Arguments:
-#   TYPE
-#       The type of library, STATIC or SHARED.
-#   HEADERS_INSTALL_PREFIX
-#       Optional installation prefix of the header files.  By default, the library name is used.
-#
-# Multi-value Arguments:
-#   CPPFILES
-#       C++ source files.
-#   PUBLIC_HEADERS
-#       Header files, which will be deployed for external usage.
-#   INCLUDE_PATHS
-#       Include paths for compiling the source files.
-#   LIBRARIES
-#       Library dependencies used for linking, but also inheriting INTERFACE properties.
-#   DEFINES
-#       Custom preprocessor defines to set.
-#
 function(
     cpp_library
     LIBRARY_NAME
@@ -67,18 +74,15 @@ function(
 
     # Install public headers for build and distribution.
     if (NOT args_HEADERS_INSTALL_PREFIX)
-        _install_public_headers(
-            ${LIBRARY_NAME}
-            PUBLIC_HEADERS
-                ${args_PUBLIC_HEADERS}
-        )
+        set(HEADERS_INSTALL_PREFIX ${LIBRARY_NAME})
     else()
-        _install_public_headers(
-            ${args_HEADERS_INSTALL_PREFIX}
-            PUBLIC_HEADERS
-                ${args_PUBLIC_HEADERS}
-        )
+        set(HEADERS_INSTALL_PREFIX ${args_HEADERS_INSTALL_PREFIX})
     endif()
+    _install_public_headers(
+        ${HEADERS_INSTALL_PREFIX}
+        PUBLIC_HEADERS
+            ${args_PUBLIC_HEADERS}
+    )
 
     # Default to STATIC library if TYPE is not specified.
     if (NOT args_TYPE)
@@ -87,26 +91,19 @@ function(
         set(LIBRARY_TYPE ${args_TYPE})
     endif()
 
-    # Add a new shared library target.
+    # Add a new library target.
     add_library(${LIBRARY_NAME}
         ${args_TYPE}
         ${args_CPPFILES}
         ${args_PUBLIC_HEADERS}
     )
 
-    # Apply common compiler properties, and include path properties.
+    # Apply properties to the target.
     _set_target_properties(${LIBRARY_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         DEFINES
             ${args_DEFINES}
-    )
-
-    # Link to libraries.
-    target_link_libraries(
-        ${LIBRARY_NAME}
-        PRIVATE
-            ${args_LIBRARIES}
     )
 
     # Install the built library.
@@ -119,126 +116,9 @@ function(
 
 endfunction() # cpp_library
 
-# Builds a new C++ executable program.
-#
-# Multi-value Arguments:
-#   CPPFILES
-#       C++ source files.
-#   INCLUDE_PATHS
-#       Include paths for compiling the source files.
-#   LIBRARIES
-#       Library dependencies used for linking, but also inheriting INTERFACE properties.
-#   DEFINES
-#       Custom preprocessor defines to set.
-function(
-    cpp_program
-    PROGRAM_NAME
-)
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs
-        CPPFILES
-        INCLUDE_PATHS
-        LIBRARIES
-        DEFINES
-    )
-
-    cmake_parse_arguments(
-        args
-        "${options}"
-        "${oneValueArgs}"
-        "${multiValueArgs}"
-        ${ARGN}
-    )
-
-    _cpp_program(${PROGRAM_NAME}
-        CPPFILES
-            ${args_CPPFILES}
-        INCLUDE_PATHS
-            ${args_INCLUDE_PATHS}
-        LIBRARIES
-            ${args_LIBRARIES}
-        DEFINES
-            ${args_DEFINES}
-    )
-
-    # Install built executable.
-    install(
-        TARGETS ${PROGRAM_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-    )
-
-endfunction() # cpp_program
-
-# Build C++ test executable program.
-# The assumed test framework is Catch2, and will be provided as a library dependency.
-#
-# Multi-value Arguments:
-#   CPPFILES
-#       C++ source files.
-#   INCLUDE_PATHS
-#       Include paths for compiling the source files.
-#   LIBRARIES
-#       Library dependencies used for linking, but also inheriting INTERFACE properties.
-#   DEFINES
-#       Custom preprocessor defines to set.
-function(
-    cpp_test_program
-    TEST_NAME
-)
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs
-        CPPFILES
-        INCLUDE_PATHS
-        LIBRARIES
-        DEFINES
-    )
-
-    cmake_parse_arguments(
-        args
-        "${options}"
-        "${oneValueArgs}"
-        "${multiValueArgs}"
-        ${ARGN}
-    )
-
-    _cpp_program(${TEST_NAME}
-        CPPFILES
-            ${args_CPPFILES}
-        INCLUDE_PATHS
-            ${args_INCLUDE_PATHS}
-        LIBRARIES
-            catch2
-            ${args_LIBRARIES}
-        DEFINES
-            ${args_DEFINES}
-    )
-
-    # Install built executable.
-    install(
-        TARGETS ${TEST_NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/tests
-    )
-
-    # Add TEST_NAME to be executed when running the "test" target.
-    add_test(
-        NAME ${TEST_NAME}
-        COMMAND $<TARGET_FILE:${TEST_NAME}>
-    )
-
-endfunction() # cpp_test_program
-
-# Export this project for external usage.
+# Export this project for external consumption.
 # Targets will be exported, and the supplied Config cmake file will configured & deployed.
-#
-# Arguments:
-#   INPUT_CONFIG
-#       Path to a Config.cmake.in which will be configured with CMake variables.
-function(
-    export_project
-    INPUT_CONFIG
-)
+function(export_project INPUT_CONFIG)
     # Install exported targets (libraries).
     install(
         EXPORT ${CMAKE_PROJECT_NAME}-targets
@@ -256,9 +136,6 @@ function(
 endfunction()
 
 # Convenience macro for adding the current source directory as a header only library.
-#
-# Positional arguments:
-#   LIBRARY: The target name of this header only library.
 function(
     add_header_only_library
     LIBRARY
@@ -282,7 +159,7 @@ endfunction()
 # Utility for setting common compilation properties, along with include paths.
 function(
     _set_target_properties
-    TARGET_NAME
+    TARGET
 )
     set(options)
     set(oneValueArgs)
@@ -299,7 +176,7 @@ function(
         ${ARGN}
     )
 
-    target_compile_options(${TARGET_NAME}
+    target_compile_options(${TARGET}
         PRIVATE -g      # Include debug symbols.
                 -O3     # Highest degree of code optimisation.
                 -Wall   # Enable _all_ warnings.
@@ -307,17 +184,17 @@ function(
                 -fno-omit-frame-pointer # Preserve frame pointer register.
     )
 
-    target_compile_definitions(${TARGET_NAME}
+    target_compile_definitions(${TARGET}
         PRIVATE
             ${args_DEFINES}
     )
 
-    target_compile_features(${TARGET_NAME}
+    target_compile_features(${TARGET}
         PRIVATE cxx_std_11
     )
 
     # Set-up include paths.
-    target_include_directories(${TARGET_NAME}
+    target_include_directories(${TARGET}
         PUBLIC
             $<INSTALL_INTERFACE:include>
         PRIVATE
@@ -326,24 +203,25 @@ function(
     )
 
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set_target_properties(${TARGET_NAME}
+        set_target_properties(${TARGET}
             PROPERTIES
             LINK_FLAGS "-Wl,-undefined,error" # Link error if there are undefined symbol(s) in output library.
         )
     else()
-        set_target_properties(${TARGET_NAME}
+        set_target_properties(${TARGET}
             PROPERTIES
             LINK_FLAGS "-Wl,--no-undefined" # Link error if there are undefined symbol(s) in output library.
         )
     endif()
 
+    target_link_libraries(${TARGET}
+        PRIVATE
+            ${args_LIBRARIES}
+    )
 endfunction() # _set_target_properties
 
 # Utility function for deploying public headers.
-function(
-    _install_public_headers
-    HEADER_INSTALL_PREFIX
-)
+function(_install_public_headers HEADERS_INSTALL_PREFIX)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs
@@ -360,22 +238,19 @@ function(
 
     file(
         COPY ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_BINARY_DIR}/include/${HEADER_INSTALL_PREFIX}
+        DESTINATION ${CMAKE_BINARY_DIR}/include/${HEADERS_INSTALL_PREFIX}
     )
 
     install(
         FILES ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${HEADER_INSTALL_PREFIX}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${HEADERS_INSTALL_PREFIX}
     )
 endfunction() # _install_public_headers
 
 # Internal function for a cpp program.
 # This is so cpp_program and cpp_test program can install
 # to different locations.
-function(
-    _cpp_program
-    PROGRAM_NAME
-)
+function(_cpp_program PROGRAM_NAME)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs
@@ -403,10 +278,7 @@ function(
             ${args_INCLUDE_PATHS}
         DEFINES
             ${args_DEFINES}
-    )
-
-    target_link_libraries(${PROGRAM_NAME}
-        PRIVATE
+        LIBRARIES
             ${args_LIBRARIES}
     )
 endfunction()
