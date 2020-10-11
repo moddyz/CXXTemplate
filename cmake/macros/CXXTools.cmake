@@ -38,6 +38,8 @@ endfunction() # cpp_program
 function(cpp_test_program NAME)
     _cpp_program(${NAME}
         ${ARGN}
+        EXTRA_LIBRARIES
+            catch2
     )
     add_test(
         NAME ${NAME}
@@ -78,8 +80,7 @@ function(
     else()
         set(HEADERS_INSTALL_PREFIX ${args_HEADERS_INSTALL_PREFIX})
     endif()
-    _install_public_headers(
-        ${HEADERS_INSTALL_PREFIX}
+    _install_public_headers(${HEADERS_INSTALL_PREFIX}
         PUBLIC_HEADERS
             ${args_PUBLIC_HEADERS}
     )
@@ -104,6 +105,8 @@ function(
             ${args_INCLUDE_PATHS}
         DEFINES
             ${args_DEFINES}
+        LIBRARIES
+            ${args_LIBRARIES}
     )
 
     # Install the built library.
@@ -166,6 +169,7 @@ function(
     set(multiValueArgs
         INCLUDE_PATHS
         DEFINES
+        LIBRARIES
     )
 
     cmake_parse_arguments(
@@ -258,6 +262,7 @@ function(_cpp_program PROGRAM_NAME)
         INCLUDE_PATHS
         LIBRARIES
         DEFINES
+        EXTRA_LIBRARIES
     )
 
     cmake_parse_arguments(
@@ -280,5 +285,6 @@ function(_cpp_program PROGRAM_NAME)
             ${args_DEFINES}
         LIBRARIES
             ${args_LIBRARIES}
+            ${args_EXTRA_LIBRARIES}
     )
 endfunction()
