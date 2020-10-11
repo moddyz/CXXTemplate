@@ -23,8 +23,7 @@ The following dependencies are optional:
 
 Example snippet for building this project:
 ```
-mkdir build
-cd build
+mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX="/apps/CXXTemplate/" ..
 cmake --build  . -- VERBOSE=1 -j8 all test install
 ```
@@ -39,11 +38,11 @@ CMake options for configuring this project:
 
 To use this template: 
 1. Create a new repository using **CXXTemplate** as the selected template project.
-2. Replace occurances of "CXXTemplate" with the new project name.
+2. Replace occurances of "CXXTemplate" with the new project name:
 ```bash
 find . -name ".git" -prune -o -type f -exec sed -i "s/CXXTemplate/YOUR_PROJECT_NAME/g" {} +
 ```
-3. Prune any un-wanted source directories or files (such as the example library and programs under `src/`).
+3. Remove any un-wanted source directories or files (such as the example library and programs under `src/`).
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
 - `cpp_library` [Example usage](src/exampleSharedLibrary/CMakeLists.txt)
