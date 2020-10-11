@@ -12,12 +12,12 @@ A starting point for a new CMake-based C++ project.
 
 ### Dependencies
 
-The following dependencies are required:
-- `>= CMake-3.12`
-- `>= C++11`
+The following dependencies are mandatory:
+- C++ compiler
+- [CMake](https://cmake.org/documentation/) (3.12 or greater)
 
 The following dependencies are optional:
-- `doxygen` and `graphviz` (for documentation)
+- [Doxygen](https://www.doxygen.nl/index.html) and [graphiviz](https://graphviz.org/) for documentation.
 
 ## Building
 
