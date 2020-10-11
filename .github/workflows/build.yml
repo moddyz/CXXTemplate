@@ -1,13 +1,18 @@
 name: Build and test
 
-# Run on any git push event.
+# Run the jobs for pushes and pull requests targetting main branch.
 on: 
-  - push
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
-  # A build job matrix based on pre-built USD binaries provided by NVIDIA.
-  nvidia-usd-binaries-build:
+  # Build and test project.
+  build-and-test:
     strategy:
       matrix:
         os:
