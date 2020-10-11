@@ -70,8 +70,7 @@ function(
     endif()
 
     # Add a new shared library target.
-    add_library(
-        ${LIBRARY_NAME}
+    add_library(${LIBRARY_NAME}
         ${args_TYPE}
         ${args_CPPFILES}
         ${args_PUBLIC_HEADERS}
@@ -227,10 +226,8 @@ function(
     # Install exported targets (libraries).
     install(
         EXPORT ${CMAKE_PROJECT_NAME}-targets
-        FILE
-            ${CMAKE_PROJECT_NAME}Targets.cmake
-        DESTINATION
-            ${CMAKE_INSTALL_PREFIX}/cmake
+        FILE ${CMAKE_PROJECT_NAME}Targets.cmake
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake
     )
 
     # Configure & install <Project>Config.cmake
@@ -253,7 +250,7 @@ function(
     # Add a new library target.
     add_library(
         ${LIBRARY}
-        IMPORTED  # TODO: Figure out what this keyword does, precisely.
+        IMPORTED  # Is imported.
         INTERFACE # This library target does not provide source files.  (Header only!)
         GLOBAL    # Make this library target available in directories above this one.
     )
