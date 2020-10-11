@@ -100,7 +100,7 @@ function(
     )
 
     # Apply properties to the target.
-    _set_target_properties(${LIBRARY_NAME}
+    _cpp_target_properties(${LIBRARY_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         DEFINES
@@ -161,7 +161,7 @@ endfunction()
 
 # Utility for setting common compilation properties, along with include paths.
 function(
-    _set_target_properties
+    _cpp_target_properties
     TARGET
 )
     set(options)
@@ -222,7 +222,7 @@ function(
         PRIVATE
             ${args_LIBRARIES}
     )
-endfunction() # _set_target_properties
+endfunction() # _cpp_target_properties
 
 # Utility function for deploying public headers.
 function(_install_public_headers HEADERS_INSTALL_PREFIX)
@@ -278,7 +278,7 @@ function(_cpp_program PROGRAM_NAME)
         ${args_CPPFILES}
     )
 
-    _set_target_properties(${PROGRAM_NAME}
+    _cpp_target_properties(${PROGRAM_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         DEFINES
