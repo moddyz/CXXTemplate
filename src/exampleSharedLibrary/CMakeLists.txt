@@ -1,8 +1,6 @@
 set(LIBRARY_NAME exampleSharedLibrary)
 
-cpp_library(${LIBRARY_NAME}
-    TYPE
-        SHARED
+cpp_shared_library(${LIBRARY_NAME}
     CPPFILES
         add.cpp
     PUBLIC_HEADERS

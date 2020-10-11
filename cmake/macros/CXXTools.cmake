@@ -2,6 +2,24 @@
 # Functions & macros for building C++ libraries and programs.
 #
 
+# Build a shared library.
+macro(cpp_shared_library NAME)
+    cpp_library(${NAME}
+        TYPE
+            "SHARED"
+        ${ARGN}
+    )
+endmacro(cpp_shared_library)
+
+# Build a static library.
+macro(cpp_static_library NAME)
+    cpp_library(${NAME}
+        TYPE
+            "STATIC"
+        ${ARGN}
+    )
+endmacro(cpp_static_library)
+
 # Builds a new C++ library.
 #
 # Single value Arguments:
@@ -77,14 +95,12 @@ function(
     )
 
     # Apply common compiler properties, and include path properties.
-    _set_compile_properties(${LIBRARY_NAME}
+    _set_target_properties(${LIBRARY_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         DEFINES
             ${args_DEFINES}
     )
-
-    _set_link_properties(${LIBRARY_NAME})
 
     # Link to libraries.
     target_link_libraries(
@@ -265,7 +281,7 @@ endfunction()
 
 # Utility for setting common compilation properties, along with include paths.
 function(
-    _set_compile_properties
+    _set_target_properties
     TARGET_NAME
 )
     set(options)
@@ -309,12 +325,6 @@ function(
             ${args_INCLUDE_PATHS}
     )
 
-endfunction() # _set_compile_properties
-
-function(
-    _set_link_properties
-    TARGET_NAME
-)
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set_target_properties(${TARGET_NAME}
             PROPERTIES
@@ -326,7 +336,8 @@ function(
             LINK_FLAGS "-Wl,--no-undefined" # Link error if there are undefined symbol(s) in output library.
         )
     endif()
-endfunction() # _set_link_properties
+
+endfunction() # _set_target_properties
 
 # Utility function for deploying public headers.
 function(
@@ -387,14 +398,12 @@ function(
         ${args_CPPFILES}
     )
 
-    _set_compile_properties(${PROGRAM_NAME}
+    _set_target_properties(${PROGRAM_NAME}
         INCLUDE_PATHS
             ${args_INCLUDE_PATHS}
         DEFINES
             ${args_DEFINES}
     )
-
-    _set_link_properties(${PROGRAM_NAME})
 
     target_link_libraries(${PROGRAM_NAME}
         PRIVATE
