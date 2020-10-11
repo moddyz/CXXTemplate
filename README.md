@@ -46,8 +46,8 @@ find . -name ".git" -prune -o -type f -exec sed -i "s/CXXTemplate/YOUR_PROJECT_N
 
 Convenience functions and macros are available to build libraries, documentation, programs, tests, or export the project:
 - `cpp_library` [Example usage](src/exampleSharedLibrary/CMakeLists.txt)
-- `cpp_program` [Example usage](src/exampleProgram/CMakeLists.txt)
-- `cpp_test_program` [Example usage](src/exampleSharedLibrary/tests/CMakeLists.txt)
+- `cpp_executable` [Example usage](src/exampleExecutable/CMakeLists.txt)
+- `cpp_test` [Example usage](src/exampleSharedLibrary/tests/CMakeLists.txt)
 - `export_project` [Example usage](CMakeLists.txt)
 
 See [cmake/macros](cmake/macros) for available tools.

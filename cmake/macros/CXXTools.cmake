@@ -21,8 +21,8 @@ macro(cpp_static_library NAME)
 endmacro(cpp_static_library)
 
 # Builds a new C++ executable program.
-function(cpp_program NAME)
-    _cpp_program(${NAME}
+function(cpp_executable NAME)
+    _cpp_executable(${NAME}
         ${ARGN}
     )
 
@@ -31,12 +31,12 @@ function(cpp_program NAME)
         TARGETS ${NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
     )
-endfunction() # cpp_program
+endfunction() # cpp_executable
 
 # Build C++ test executable program.
 # The assumed test framework is Catch2, and will be provided as a library dependency.
-function(cpp_test_program NAME)
-    _cpp_program(${NAME}
+function(cpp_test NAME)
+    _cpp_executable(${NAME}
         ${ARGN}
         EXTRA_LIBRARIES
             catch2
@@ -46,7 +46,7 @@ function(cpp_test_program NAME)
         COMMAND $<TARGET_FILE:${NAME}>
     )
 
-endfunction() # cpp_test_program
+endfunction() # cpp_test
 
 # Builds a new C++ library.
 function(
@@ -252,9 +252,9 @@ function(_install_public_headers HEADERS_INSTALL_PREFIX)
 endfunction() # _install_public_headers
 
 # Internal function for a cpp program.
-# This is so cpp_program and cpp_test program can install
+# This is so cpp_executable and cpp_test program can install
 # to different locations.
-function(_cpp_program PROGRAM_NAME)
+function(_cpp_executable PROGRAM_NAME)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs

@@ -1,5 +1,4 @@
-cpp_program(
-    exampleProgram
+cpp_executable(adder
     LIBRARIES
         exampleSharedLibrary
     CPPFILES
