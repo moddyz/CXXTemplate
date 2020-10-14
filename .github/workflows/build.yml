@@ -74,7 +74,8 @@ jobs:
         run: |
           cmake --build . \
                 --target install \
-                --config ${{ matrix.build-type }}
+                --config ${{ matrix.build-type }} \
+                -- VERBOSE=1
         shell: bash
         working-directory: _build
 
