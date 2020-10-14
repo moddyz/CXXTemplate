@@ -180,14 +180,6 @@ function(
         ${ARGN}
     )
 
-    target_compile_options(${TARGET}
-        PRIVATE -g      # Include debug symbols.
-                -O3     # Highest degree of code optimisation.
-                -Wall   # Enable _all_ warnings.
-                -Werror # Error on compilation for warnings.
-                -fno-omit-frame-pointer # Preserve frame pointer register.
-    )
-
     target_compile_definitions(${TARGET}
         PRIVATE
             ${args_DEFINES}
@@ -205,18 +197,6 @@ function(
             $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
             ${args_INCLUDE_PATHS}
     )
-
-    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set_target_properties(${TARGET}
-            PROPERTIES
-            LINK_FLAGS "-Wl,-undefined,error" # Link error if there are undefined symbol(s) in output library.
-        )
-    else()
-        set_target_properties(${TARGET}
-            PROPERTIES
-            LINK_FLAGS "-Wl,--no-undefined" # Link error if there are undefined symbol(s) in output library.
-        )
-    endif()
 
     target_link_libraries(${TARGET}
         PRIVATE
