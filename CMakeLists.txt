@@ -10,18 +10,16 @@ project(
 
 # Set module search paths.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/
-                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros)
+                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake
+                      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/tools)
 # Apply options.
 include(Options)
 
-# Tools
-include(BaseTools)
-include(DocTools)
-include(CXXTools)
-
 # Apply project defaults.
 include(Defaults)
+
+# Tools
+include(Tools)
 
 # Add targets.
 add_subdirectory(thirdparty)
