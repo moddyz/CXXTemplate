@@ -15,11 +15,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 # Apply options.
 include(Options)
 
-# Apply project defaults.
-include(Defaults)
-
 # Tools
 include(Tools)
+
+# Apply project defaults.
+include(Defaults)
 
 # Add targets.
 add_subdirectory(thirdparty)
