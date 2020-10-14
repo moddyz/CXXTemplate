@@ -47,7 +47,7 @@ jobs:
           - build: 1
             build-type: Release
             build-tests: 'ON'
-            build-docs: 'ON'
+            build-docs: 'OFF'
     name: 'Windows 2019 
       <MSVC 16.4 
        type=${{ matrix.build-type }}, 
