@@ -69,7 +69,7 @@ jobs:
                 -DBUILD_DOCUMENTATION=${{ matrix.build-docs }} \
                 -DCMAKE_INSTALL_PREFIX=../_install
         working-directory: _build
-       - name: Build
+      - name: Build
         run: |
           cmake --build . \
                 --target install \
