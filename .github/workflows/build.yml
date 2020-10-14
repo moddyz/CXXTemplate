@@ -65,8 +65,8 @@ jobs:
         run: |
           cmake ../. \
                 -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-                -DBUILD_TESTING=${{ build-tests }} \
-                -DBUILD_DOCUMENTATION=${{ build-docs }} \
+                -DBUILD_TESTING=${{ matrix.build-tests }} \
+                -DBUILD_DOCUMENTATION=${{ matrix.build-docs }} \
                 -DCMAKE_INSTALL_PREFIX=../_install
         working-directory: _build
        - name: Build
