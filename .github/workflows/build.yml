@@ -68,6 +68,7 @@ jobs:
                 -DBUILD_TESTING=${{ matrix.build-tests }} \
                 -DBUILD_DOCUMENTATION=${{ matrix.build-docs }} \
                 -DCMAKE_INSTALL_PREFIX=../_install
+        shell: bash
         working-directory: _build
       - name: Build
         run: |
@@ -75,6 +76,7 @@ jobs:
                 --target install \
                 --config ${{ matrix.build-type }}
         shell: bash
+        working-directory: _build
 
   # Run automated code formatting checks.
   code-formatting-check:
