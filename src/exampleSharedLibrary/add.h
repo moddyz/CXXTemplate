@@ -15,4 +15,4 @@
 #endif
 
 /// Adds integers \p i_lhs and \p i_rhs and returns the result.
-CXXTEMPLATE_EXPORT int Add( int i_lhs, int i_rhs );
+CXXTEMPLATE_API int Add( int i_lhs, int i_rhs );
