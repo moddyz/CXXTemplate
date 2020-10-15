@@ -149,7 +149,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run clang-format on source code
         run: |
-          find . -name ".git" -prune -o -name "*.cpp" -type f -exec clang-format -i --verbose {} + -o -name "*.h" -type f -exec clang-format -i --verbose {} +
+          find . \
+            -name ".git" -prune -o \
+            -name "*.cpp" -type f -exec clang-format -i --verbose {} + -o \
+            -name "*.h" -type f -exec clang-format -i --verbose {} +
       - name: Check for source differences
         run: |
           set +e
