@@ -61,7 +61,7 @@ jobs:
           - 1
         include:
           - build: 1
-            build-type: Debug
+            build-type: Release
             build-tests: 'ON'
             build-docs: 'OFF'
     name: 'Windows 2019 
@@ -94,10 +94,10 @@ jobs:
                 --config ${{ matrix.build-type }}
         shell: bash
         working-directory: _build
-      - name: Test
-        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
-        shell: bash
-        working-directory: _build
+     #- name: Test
+     #  run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
+     #  shell: bash
+     #  working-directory: _build
 
   macos-build:
     strategy:
