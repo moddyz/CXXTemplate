@@ -50,7 +50,7 @@ jobs:
                 --target install \
                 --config ${{ matrix.build-type }}
         working-directory: _build
-      - name: test
+      - name: Test
         run: ctest -V
         working-directory: _build
 
@@ -94,7 +94,7 @@ jobs:
                 --config ${{ matrix.build-type }}
         shell: bash
         working-directory: _build
-      - name: test
+      - name: Test
         run: ctest -V
         shell: bash
         working-directory: _build
@@ -135,7 +135,7 @@ jobs:
                 --target install \
                 --config ${{ matrix.build-type }}
         working-directory: _build
-      - name: test
+      - name: Test
         run: ctest -V
         working-directory: _build
 
