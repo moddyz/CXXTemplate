@@ -35,7 +35,6 @@ jobs:
         run: |
           mkdir _build
           mkdir _install
-        shell: bash
       - name: Configure
         run: |
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
@@ -43,7 +42,6 @@ jobs:
                 -DBUILD_DOCUMENTATION=${{ matrix.build-docs }} \
                 -DCMAKE_INSTALL_PREFIX=../_install \
                 ..
-        shell: bash
         working-directory: _build
       - name: Build
         run: |
@@ -51,7 +49,9 @@ jobs:
                 --verbose \
                 --target install \
                 --config ${{ matrix.build-type }}
-        shell: bash
+        working-directory: _build
+      - name: Test
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
         working-directory: _build
 
   windows-build:
@@ -94,6 +94,10 @@ jobs:
                 --config ${{ matrix.build-type }}
         shell: bash
         working-directory: _build
+     #- name: Test
+     #  run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
+     #  shell: bash
+     #  working-directory: _build
 
   macos-build:
     strategy:
@@ -116,7 +120,6 @@ jobs:
         run: |
           mkdir _build
           mkdir _install
-        shell: bash
       - name: Configure
         run: |
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
@@ -124,7 +127,6 @@ jobs:
                 -DBUILD_DOCUMENTATION=${{ matrix.build-docs }} \
                 -DCMAKE_INSTALL_PREFIX=../_install \
                  .. \
-        shell: bash
         working-directory: _build
       - name: Build
         run: |
@@ -132,7 +134,9 @@ jobs:
                 --verbose \
                 --target install \
                 --config ${{ matrix.build-type }}
-        shell: bash
+        working-directory: _build
+      - name: Test
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
         working-directory: _build
 
   # Run automated code formatting checks.
