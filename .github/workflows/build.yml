@@ -61,7 +61,7 @@ jobs:
           - 1
         include:
           - build: 1
-            build-type: Release
+            build-type: Debug
             build-tests: 'ON'
             build-docs: 'OFF'
     name: 'Windows 2019 
