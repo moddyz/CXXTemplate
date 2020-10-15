@@ -51,7 +51,7 @@ jobs:
                 --config ${{ matrix.build-type }}
         working-directory: _build
       - name: Test
-        run: ctest -VV --output-on-failure
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
         working-directory: _build
 
   windows-build:
@@ -95,7 +95,7 @@ jobs:
         shell: bash
         working-directory: _build
       - name: Test
-        run: ctest -VV --output-on-failure
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
         shell: bash
         working-directory: _build
 
@@ -136,7 +136,7 @@ jobs:
                 --config ${{ matrix.build-type }}
         working-directory: _build
       - name: Test
-        run: ctest -VV --output-on-failure
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
         working-directory: _build
 
   # Run automated code formatting checks.
