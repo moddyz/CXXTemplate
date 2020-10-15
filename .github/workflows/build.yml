@@ -136,7 +136,8 @@ jobs:
         working-directory: _build
 
   # Run automated code formatting checks.
-  Check C++ code formatting:
+  check-code-formatting:
+    name: "Check C++ code formatting"
     runs-on: ubuntu-18.04 
     steps:
       - name: Install clang-format
