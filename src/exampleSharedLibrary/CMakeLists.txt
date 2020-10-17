@@ -5,6 +5,7 @@ cpp_shared_library(${LIBRARY_NAME}
         add.cpp
     PUBLIC_HEADERS
         add.h
+        api.h
 )
 
 if(BUILD_TESTING)
