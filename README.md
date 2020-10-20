@@ -1,4 +1,4 @@
-![Build and test][(https://github.com/moddyz/CXXTemplate/workflows/Build%20and%20test/badge.svg)](https://github.com/moddyz/CXXTemplate/actions?query=workflow%3A%22Build+and+test%22)
+<img src="https://github.com/moddyz/CXXTemplate/workflows/Build%20and%20test/badge.svg" ref="https://github.com/moddyz/CXXTemplate/actions?query=workflow%3A%22Build+and+test%22"/>
 
 # CXXTemplate
 
