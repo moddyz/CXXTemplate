@@ -126,6 +126,7 @@ function(export_project INPUT_CONFIG)
     install(
         EXPORT ${CMAKE_PROJECT_NAME}-targets
         FILE ${CMAKE_PROJECT_NAME}Targets.cmake
+        NAMESPACE ${CMAKE_PROJECT_NAME}::
         DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake
     )
 
