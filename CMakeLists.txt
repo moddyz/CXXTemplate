@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 project(
     CXXTemplate
     VERSION 0.0
-    DESCRIPTION "Basic template for starting out a new CMake-based project."
+    DESCRIPTION "A starting point for a new CMake-based C++ project."
     LANGUAGES CXX
 )
 
