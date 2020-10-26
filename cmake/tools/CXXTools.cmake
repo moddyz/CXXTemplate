@@ -95,8 +95,11 @@ function(
     # Add a new library target.
     add_library(${LIBRARY_NAME}
         ${args_TYPE}
-        ${args_CPPFILES}
-        ${args_PUBLIC_HEADERS}
+    )
+    target_sources(${LIBRARY_NAME}
+        PRIVATE
+            ${args_CPPFILES}
+            ${args_PUBLIC_HEADERS}
     )
 
     # Apply properties to the target.
