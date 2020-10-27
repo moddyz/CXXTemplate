@@ -1,4 +1,4 @@
-#include <exampleSharedLibrary/add.h>
+#include <exampleModuleLibrary/add.h>
 
 int Add( int i_lhs, int i_rhs )
 {
