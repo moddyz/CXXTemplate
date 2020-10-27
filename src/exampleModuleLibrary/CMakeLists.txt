@@ -7,7 +7,3 @@ cpp_module_library(${LIBRARY_NAME}
         add.h
         api.h
 )
-
-if(BUILD_TESTING)
-    add_subdirectory(tests)
-endif()
