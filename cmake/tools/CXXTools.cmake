@@ -11,6 +11,15 @@ macro(cpp_shared_library NAME)
     )
 endmacro(cpp_shared_library)
 
+# Build a module library (or plugin).
+macro(cpp_module_library NAME)
+    cpp_library(${NAME}
+        TYPE
+            "MODULE"
+        ${ARGN}
+    )
+endmacro(cpp_module_library)
+
 # Build a static library.
 macro(cpp_static_library NAME)
     cpp_library(${NAME}
