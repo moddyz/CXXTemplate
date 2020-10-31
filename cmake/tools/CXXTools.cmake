@@ -121,6 +121,14 @@ function(
             ${args_LIBRARIES}
     )
 
+    # Setup SOVERSION & VERSION properties to create
+    # NAMELINK, SONAME, and actual library with full version suffix.
+    set_target_properties(${NAME}
+        PROPERTIES
+            SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
+            VERSION ${CMAKE_PROJECT_VERSION}
+    )
+
     # Install the built library.
     install(
         TARGETS ${LIBRARY_NAME}
