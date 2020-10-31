@@ -83,9 +83,15 @@ function(
     else()
         set(HEADERS_INSTALL_PREFIX ${args_HEADERS_INSTALL_PREFIX})
     endif()
-    _install_public_headers(${HEADERS_INSTALL_PREFIX}
-        PUBLIC_HEADERS
-            ${args_PUBLIC_HEADERS}
+
+    file(
+        COPY ${args_PUBLIC_HEADERS}
+        DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/${HEADERS_INSTALL_PREFIX}
+    )
+
+    install(
+        FILES ${args_PUBLIC_HEADERS}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${HEADERS_INSTALL_PREFIX}
     )
 
     # Default to STATIC library if TYPE is not specified.
@@ -200,9 +206,9 @@ function(
     # Set-up include paths.
     target_include_directories(${TARGET}
         PUBLIC
-            $<INSTALL_INTERFACE:include>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
         PRIVATE
-            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}>
             ${args_INCLUDE_PATHS}
     )
 
@@ -211,33 +217,6 @@ function(
             ${args_LIBRARIES}
     )
 endfunction() # _cpp_target_properties
-
-# Utility function for deploying public headers.
-function(_install_public_headers HEADERS_INSTALL_PREFIX)
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs
-        PUBLIC_HEADERS
-    )
-
-    cmake_parse_arguments(
-        args
-        "${options}"
-        "${oneValueArgs}"
-        "${multiValueArgs}"
-        ${ARGN}
-    )
-
-    file(
-        COPY ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_BINARY_DIR}/include/${HEADERS_INSTALL_PREFIX}
-    )
-
-    install(
-        FILES ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${HEADERS_INSTALL_PREFIX}
-    )
-endfunction() # _install_public_headers
 
 # Internal function for a cpp program.
 # This is so cpp_executable and cpp_test program can install
