@@ -59,7 +59,7 @@ function(
     set(options)
     set(oneValueArgs
         TYPE
-        HEADERS_INSTALL_PREFIX
+        PUBLIC_HEADERS_INSTALL_PREFIX
     )
     set(multiValueArgs
         CPPFILES
@@ -78,20 +78,20 @@ function(
     )
 
     # Install public headers for build and distribution.
-    if (NOT args_HEADERS_INSTALL_PREFIX)
-        set(HEADERS_INSTALL_PREFIX ${LIBRARY_NAME})
+    if (NOT args_PUBLIC_HEADERS_INSTALL_PREFIX)
+        set(PUBLIC_HEADERS_INSTALL_PREFIX ${LIBRARY_NAME})
     else()
-        set(HEADERS_INSTALL_PREFIX ${args_HEADERS_INSTALL_PREFIX})
+        set(PUBLIC_HEADERS_INSTALL_PREFIX ${args_PUBLIC_HEADERS_INSTALL_PREFIX})
     endif()
 
     file(
         COPY ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/${HEADERS_INSTALL_PREFIX}
+        DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/${PUBLIC_HEADERS_INSTALL_PREFIX}
     )
 
     install(
         FILES ${args_PUBLIC_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${HEADERS_INSTALL_PREFIX}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PUBLIC_HEADERS_INSTALL_PREFIX}
     )
 
     # Default to STATIC library if TYPE is not specified.
