@@ -2,6 +2,9 @@
 # Tools for building C++ libraries and programs.
 #
 
+# Get access to the standard install variables.
+include(GNUInstallDirs)
+
 # Build a shared library.
 macro(cpp_shared_library NAME)
     cpp_library(${NAME}
@@ -29,7 +32,7 @@ function(cpp_executable NAME)
     # Install built executable.
     install(
         TARGETS ${NAME}
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 endfunction() # cpp_executable
 
@@ -116,8 +119,9 @@ function(
     install(
         TARGETS ${LIBRARY_NAME}
         EXPORT ${CMAKE_PROJECT_NAME}-targets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
 
 endfunction() # cpp_library
