@@ -94,10 +94,10 @@ jobs:
                 --config ${{ matrix.build-type }}
         shell: bash
         working-directory: _build
-     #- name: Test
-     #  run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
-     #  shell: bash
-     #  working-directory: _build
+      - name: Test
+        run: ctest -VV --output-on-failure -C ${{ matrix.build-type }}
+        shell: bash
+        working-directory: _build
 
   macos-build:
     strategy:
