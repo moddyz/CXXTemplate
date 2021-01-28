@@ -39,15 +39,58 @@ endfunction() # cpp_executable
 # Build C++ test executable program.
 # The assumed test framework is Catch2, and will be provided as a library dependency.
 function(cpp_test NAME)
-    _cpp_executable(${NAME}
-        ${ARGN}
-        EXTRA_LIBRARIES
-            catch2
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs
+        CPPFILES
+        INCLUDE_PATHS
+        LIBRARIES
+        DEFINES
     )
+
+    cmake_parse_arguments(
+        args
+        "${options}"
+        "${oneValueArgs}"
+        "${multiValueArgs}"
+        ${ARGN}
+    )
+
+    _cpp_executable(${NAME}
+        CPPFILES
+            ${args_CPPFILES}
+        INCLUDE_PATHS
+            ${args_INCLUDE_PATHS}
+        LIBRARIES
+            ${args_LIBRARIES}
+            catch2
+        DEFINES
+            ${args_DEFINES}
+    )
+
     add_test(
         NAME ${NAME}
         COMMAND $<TARGET_FILE:${NAME}>
     )
+
+    if (WIN32)
+        # For Windows, append the directories containing the DLL dependencies
+        # to the test environment.
+
+        set(LIB_DIRS "")
+        foreach(LIB_NAME ${args_LIBRARIES})
+            get_target_property(LIB_TYPE ${LIB_NAME} TYPE)
+            if (${LIB_TYPE} STREQUAL "SHARED_LIBRARY")
+                list(APPEND LIB_DIRS $<TARGET_FILE_DIR:${LIB_NAME}>)
+            endif()
+        endforeach()
+
+        set_tests_properties(${NAME}
+            PROPERTIES
+                ENVIRONMENT
+                    PATH=${LIB_DIRS}
+        )
+    endif()
 
 endfunction() # cpp_test
 
@@ -237,7 +280,6 @@ function(_cpp_executable PROGRAM_NAME)
         INCLUDE_PATHS
         LIBRARIES
         DEFINES
-        EXTRA_LIBRARIES
     )
 
     cmake_parse_arguments(
@@ -260,6 +302,5 @@ function(_cpp_executable PROGRAM_NAME)
             ${args_DEFINES}
         LIBRARIES
             ${args_LIBRARIES}
-            ${args_EXTRA_LIBRARIES}
     )
 endfunction()
